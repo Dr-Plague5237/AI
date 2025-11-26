@@ -1,0 +1,18 @@
+version: "3.8"
+
+services:
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+
+  headless:
+    image: mcr.microsoft.com/playwright:focal
+    container_name: headless_browser
+    entrypoint: [ "tail", "-f", "/dev/null" ]  # keep it running
+    volumes:
+      - ./work:/work
+      - /mnt/data:/mnt/data:ro
+    restart: unless-stopped
